@@ -1,33 +1,19 @@
 import {useRef, useState } from "react";
 import Controls from "./Control";
+import convertToString from "./convert";
 
 
 const Video = () => {
   const [videoProgress, setVideoProgress] = useState(0);
   const [buffer, setBuffer] = useState(0);
   const [videoDuaration,setVideoDuaration] = useState("00:00:00");
-  
   const [time, setTime] = useState("00:00:00");
   const refe = useRef(null);
+
   const updateDuration = ()=>{
     const videoLength = refe.current.duration;
-
-    let hour = Math.floor(videoLength / 3600);
-    let min = Math.floor(videoLength / 60);
-    let sec = Math.floor(videoLength % 60);
-    
-    if (hour < 10) {
-      hour = "0" + hour;
-    }
-    if (min < 10) {
-      min = "0" + min;
-    }
-    if (sec < 10) {
-      sec = "0" + sec;
-    }
-    const time = hour + ":" + min + ":" + sec;
+    const time = convertToString(videoLength);
     setVideoDuaration(time);
-
   }
   
   const handleTimeUpdate = () => {
@@ -41,21 +27,7 @@ const Video = () => {
     setVideoProgress(progressLength);
     setBuffer(bufferedLength-progressLength);
 
-    let hour = Math.floor(currLenght / 3600);
-    let min = Math.floor(currLenght / 60);
-    let sec = Math.floor(currLenght % 60);
-
-    if (hour < 10) {
-      hour = "0" + hour;
-    }
-    if (min < 10) {
-      min = "0" + min;
-    }
-    if (sec < 10) {
-      sec = "0" + sec;
-    }
-
-    const time = hour + ":" + min + ":" + sec;
+    const time  = convertToString(currLenght);
     setTime(time);
     
   };
